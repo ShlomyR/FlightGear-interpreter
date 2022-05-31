@@ -52,7 +52,7 @@ unordered_map<string,string> Variiable::Vari(vector<string> var_arr)
 
 void Variiable::getVarValue(vector<string> var_arr)
 {
-    sleep(70);
+    //sleep(70);
         
     
     SymbleVar::getInstance()->data_base[var_arr[0]];
@@ -65,6 +65,11 @@ void Variiable::getVarValue(vector<string> var_arr)
     vecSY.insert(vecSY.begin(), SymbleVar::getInstance()->data_base.find(var_arr[0])->first);
     vecSY.insert(vecSY.begin(),vecSY[6]);
     vecSY.insert(vecSY.begin(),vecSY[6]);
+    // for (int i = 0; i < vecSY.size(); i++)
+    // {
+    //    cout << "vec: " << vecSY[i] << "\n";
+    // }
+    
     
 }
 

@@ -15,12 +15,11 @@ Server* Server::getInstance()
 
 int new_socket,client_socket;
 
-int run_FG()
+void run_FG()
 {
-    string s = "fgfs --verbose -v";
-    system(s.c_str());
+    
+    system("fgfs --telnet=socket,in,10,127.0.0.1,5402,tcp --generic=socket,out,10,127.0.0.1,5400,tcp,generic_small");
 
-    return 0;
 }
 
 void runServer();
@@ -47,13 +46,13 @@ int Server::connectServer(int port,int ping)
 
     listen(server_fd, 3) < 0 ;
     
-    printf("Waiting to connection\n");
+    printf("Waiting for connection\n");
 
-    //Server::getInstance()->t2 = thread(run_FG);
+    Server::getInstance()->t2 = thread(run_FG);
 
     (new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0 ;
    
-
+    printf("connecting...\n");
     Server::getInstance()->t1  = thread(runServer); 
     
     return 0;

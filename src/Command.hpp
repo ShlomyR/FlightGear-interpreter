@@ -22,7 +22,6 @@
 #include "Client.hpp"
 #include "convertSTI.hpp"
 #include "Variiable.hpp"
-//#include "WhileLoop.hpp"
 #include "SymbleVar.hpp"
 #include "SuntingYardToken.hpp"
 
@@ -30,12 +29,20 @@
 using namespace std;
 using namespace std::chrono;
 
-
 class Command
 {
 public:
     virtual int DoCommand(vector<vector<string>> &arr, int index) = 0;
     
+};
+
+class OpenServerCommand : public Command
+{
+public:
+    int DoCommand(vector<vector<string>> &arr, int index) override;
+
+    OpenServerCommand();
+    ~OpenServerCommand();
 };
 
 class ConnectCommand : public Command
@@ -47,37 +54,35 @@ public:
     ~ConnectCommand();
 };
 
+class VerCommand : public Command
+{
+public:
+    int DoCommand(vector<vector<string>> &arr, int index) override;
+
+    VerCommand();
+    ~VerCommand();
+};
+
 class EqualMapCommand : public Command
 {
 public:
     int DoCommand(vector<vector<string>> &arr, int index) override;
-    string uptdateFromDB(vector<vector<string>> &arr, int index);
-    bool is_charecther(string val);
+    void uptdateFromDB(vector<vector<string>> &arr, int index);
 
     EqualMapCommand();
     ~EqualMapCommand();
 };
 
-class OpenServerCommand : public Command
+class WhileCommand : public Command
 {
 public:
     int DoCommand(vector<vector<string>> &arr, int index) override;
 
-    static int run_FG();
+    static double getVal(vector<vector<string>> &arr, int index);
+    int skipRows(vector<vector<string>> &arr, int index);
 
-    OpenServerCommand();
-    ~OpenServerCommand();
-};
-
-class PrintCommand : public Command
-{
-public:
-    int DoCommand(vector<vector<string>> &arr, int index) override;
-
-    void printFunc(string val);
-
-    PrintCommand();
-    ~PrintCommand();
+    WhileCommand();
+    ~WhileCommand();
 };
 
 class SleepCommand : public Command
@@ -91,23 +96,13 @@ public:
     ~SleepCommand();
 };
 
-class VerCommand : public Command
+class PrintCommand : public Command
 {
 public:
     int DoCommand(vector<vector<string>> &arr, int index) override;
 
-    VerCommand();
-    ~VerCommand();
-};
+    void printFunc(string val);
 
-class WhileCommand : public Command
-{
-public:
-    int DoCommand(vector<vector<string>> &arr, int index) override;
-
-    static double getVal(vector<vector<string>> &arr, int index);
-    int sipRows(vector<vector<string>> &arr, int index);
-
-    WhileCommand();
-    ~WhileCommand();
+    PrintCommand();
+    ~PrintCommand();
 };
