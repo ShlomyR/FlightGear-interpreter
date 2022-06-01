@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     
     else
     {
-        fileName = "/home/charles/Documents/flight_sim_uav/FlightGear-Interpreter-master/good/src/Script.txt";
+        fileName = "src/Script.txt";
     }
     
     Lexer* lexer = new Lexer();
