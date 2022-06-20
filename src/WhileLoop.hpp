@@ -1,20 +1,24 @@
 #pragma once
 
-
+#include <iostream>
+#include <string>
+#include <vector>
+#include <fstream>
+#include <bits/stdc++.h>
 
 #include "Parser.hpp"
 
 
 
-
 class WhileLoop
 {
-    private:
-    public:
-        WhileLoop();
-        static int whileLoop(vector<vector<string>>& arr, int index);
-        static void readyToPars(vector<vector<string>>& arr ,int index);
-        vector<string> vv = {{"0"},{"0"},{"0"}} ;
-        vector<vector<string>> copyArr;
+private:
+    static void deleteSpace(vector<vector<string>> &arr);
+public:
+    WhileLoop();
+    static int whileLoop(vector<vector<string>> &arr);
+        
+    vector<string> infix_vec;
+    vector<vector<string>> copy_arr;
 
 };

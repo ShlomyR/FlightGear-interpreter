@@ -24,28 +24,24 @@ private:
     Server();
     ~Server();
 	static Server* instance;
+    string read_data(std::string msg);
+    vector<double> getValVector(string s);
+    static void runServerDB();
+    static void run_FG();
 
-    
-		
-
-public:
-    std::string bindArr[37];
     std::thread t1;
     std::thread t2;
+    
+public:
 
+    std::string bindArr[36];
+	
+	int connectServer(int port, int ping);
+    static Server* getInstance();
     
+    void makeBindArray();
 
-    int makeBindArray();
-
-	static int connectServer(int port, int ping);
-    static string read_data(std::string msg);
-    static vector<double> getValVector(string s);
-    
-	static Server* getInstance();
-    
-    
-    
-			
+    		
 };
 
 enum vars {

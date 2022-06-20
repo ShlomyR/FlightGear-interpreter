@@ -11,11 +11,14 @@ Client* Client::getInstance()
     return instance;
 }
 
-Client::Client(){}
+Client::Client()
+{
+    
+}
 
 int sock = 0, valread; 
 
-int Client::connect1(int port)
+int Client::connectClient(int port)
 {
 	struct sockaddr_in serv_addr; 
 	
@@ -55,6 +58,17 @@ void Client::Send(std::string msg)
 {
 	send(sock , msg.c_str() , msg.length() , 0 );
     cout << msg << "\n";
+    
+}
+
+void Client::SendVal(vector<vector<string>> &arr,double infix)
+{
+    string val = to_string(infix);
+
+    string set = "set";
+    string activate = "\r\n";
+
+    Client::getInstance()->Send(set + " " + Variable::getInstance()->base_map_DB.at(arr[Parser::index][0]) + " " + val + activate);
     
 }
 

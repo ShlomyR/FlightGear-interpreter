@@ -1,32 +1,26 @@
-#include <string>
-#include <vector>
-
 #include "Parser.hpp"
 #include "Lexer.hpp"
 
-
-
-using namespace std;
-
-
+#define PHAT "/home/charles/Documents/flight_sim_uav/FlightGear-Interpreter-master/good/src/Script.txt"
 
 int main(int argc, char *argv[]) 
 {
-    string fileName;
+    std::string file_name;
     
     if(argc > 1) 
     {
-        fileName = argv[1];
+        file_name = argv[1];
     }
     
     else
     {
-        fileName = "src/Script.txt";
+        file_name = PHAT;
     }
     
-    Lexer* lexer = new Lexer();
-    vector<vector<string>> arr = lexer->do_lexer(fileName);
-    Parser* parser = new Parser();
-    parser->parse(arr);
+    Lexer lexer ;
+    Parser parser;
 
+    vector<vector<string>> arr = lexer.do_lexer(file_name);
+    parser.parse(arr);
+    
 }

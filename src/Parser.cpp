@@ -1,42 +1,46 @@
 #include "Parser.hpp"
 
-
-
-Parser::Parser() 
+Parser::Parser()
 {
-    this->command_map["openDataServer"] = new OpenServerCommand();
-    this->command_map["connect"] = new ConnectCommand();
-    this->command_map["var"] = new VerCommand();
-    this->command_map["="] = new EqualMapCommand();
-    this->command_map["while"] = new WhileCommand();
-    this->command_map[""] = new WhileCommand();
-    this->command_map["print"] = new PrintCommand();
-    this->command_map["sleep"] = new SleepCommand();
+    command_map["openDataServer"] = new OpenServerCommand();
+    command_map["connect"] = new ConnectCommand();
+    command_map["var"] = new VerCommand();
+    command_map["="] = new EqualMapCommand();
+    command_map["while"] = new WhileCommand();
+    command_map["print"] = new PrintCommand();
+    command_map["sleep"] = new SleepCommand();
+    command_map["exit"] = new ExitCommand();
 }
+
 vector<vector<string>> Parser::vector_commands;
 
+int Parser::index;
 
-void Parser::parse(vector<vector<string>>& arr) 
+void Parser::parse(vector<vector<string>> &arr)
 {
-
-    int index = 0;
-    
-    for (index ;index < arr.size();index++)
+    for (Parser::index = 0; Parser::index < arr.size(); Parser::index++)
     {
-        if ((arr[index][1] == "="))
+        Command *c;
+        if (arr[Parser::index][1] == "=")
         {
-            Command* c = command_map.find(arr[index][1])->second;
-            index += c->DoCommand(arr, index);
-            
+            c = command_map.at(arr[Parser::index][1]);
         }
         else
         {
-            Command* c = command_map.find(arr[index][0])->second;
-            index += c->DoCommand(arr, index);
+            c = command_map.at(arr[Parser::index][0]);
         }
-        
-        
+        Parser::index += c->DoCommand(arr);
     }
-    
 }
 
+Parser::~Parser()
+{
+    command_map["openDataServer"]->~Command();
+    command_map["connect"]->~Command();
+    command_map["var"]->~Command();
+    command_map["="]->~Command();
+    command_map["while"]->~Command();
+    command_map["print"]->~Command();
+    command_map["sleep"]->~Command();
+    command_map["exit"]->~Command();
+}

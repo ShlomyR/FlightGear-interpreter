@@ -18,7 +18,7 @@ public:
         LeftParen,
         RightParen,
     };
-    //SuntingYardToken(){}
+    
     SuntingYardToken(Type t, const std::string& s, int prec = -1, bool ra = false) 
         : type { t }, str ( s ), precedence { prec }, rightAssociative { ra }
         {}

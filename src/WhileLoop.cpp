@@ -6,63 +6,24 @@ WhileLoop::WhileLoop()
 }
 
 
-Parser *parser = new Parser();
+Parser parser;
 
-void WhileLoop::readyToPars(vector<vector<string>> &arr, int index)
-{
-    int i = index + 1;
-    
-    while (arr[i][0] != "}")
+
+int WhileLoop::whileLoop(vector<vector<string>> &arr)
+{ 
+    double val_from_DB;
+
+    int i = Parser::index;
+
+    while ((val_from_DB = WhileCommand::getVal(arr,i)) < stoi(arr[i][3]))
     {
-        if (arr[i].size() == 6)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                arr[i].erase(arr[i].begin());
-            }
-            parser->vector_commands.push_back(arr[i]);
-        }
-
-        if (arr[i].size() != 2)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                arr[i].erase(arr[i].begin());
-            }
-            parser->vector_commands.push_back(arr[i]);
-           
-            
-        }
-        i++;
+        parser.parse(parser.vector_commands);
     }
-    i++;
+    parser.vector_commands.clear();
 
+    parser.index = 0;
     
-}
+    printf("Parser finished\n");
 
-
-
-
-
-int WhileLoop::whileLoop(vector<vector<string>> &arr, int index)
-{
-    int i = index + 1;
-    double valFromDB;
-    
-    readyToPars(arr, index);
-
-    
-    
-    while ((valFromDB = WhileCommand::getVal(arr,index)) < convertSTOI(arr[index][3]))
-    {
-        parser->parse(parser->vector_commands);
-    }
-
-    printf("Parser finitu\n");
-
-    
-    
-
-    delete parser;
-    return i - index;
+    return 0;
 }

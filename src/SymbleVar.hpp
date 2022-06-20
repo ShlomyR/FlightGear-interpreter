@@ -23,24 +23,17 @@ using namespace std::chrono;
 
 class SymbleVar
 {
-    private:
-        static SymbleVar* instance;
+private:
+    SymbleVar();
+    static SymbleVar* instance;
+    template<typename K, typename V>
+    void print_mapDB(std::unordered_map<K, V> const &m);
 
-        SymbleVar();
-
-    public:
-        template<typename K, typename V>
-        void print_mapDB(std::unordered_map<K, V> const &m);
+public:
         
-        static SymbleVar* getInstance();
-
-        static unordered_map<string,double> data_base;
-
-        unordered_map<string,double> creatDataBaseMap(string key,double val);
-
-    
-        
-
+    static SymbleVar* getInstance();
+    unordered_map<string,double> data_base;
+    unordered_map<string,double> creatDataBaseMap(string key,double val);
 
 };
 

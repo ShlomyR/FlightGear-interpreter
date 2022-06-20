@@ -21,7 +21,7 @@ var elevator = bind /controls/flight/elevator
 var alt = bind /instrumentation/altimeter/indicated-altitude-ft
 var rpm = bind /engines/engine/rpm
 var heading = bind /instrumentation/heading-indicator/offset-deg
-sleep 60
+sleep 45
 print "let's_start"
 sleep 1
 magnetos = 3
@@ -35,11 +35,10 @@ primer = 3
 starter = 1
 autostart = 1
 print "engine_is_warming..."
-print rpm
 rpm = 800
 print rpm
 var h0 = heading
-sleep 30
+sleep 5
 print "let's_fly"
 breaks = 0
 sleep 1

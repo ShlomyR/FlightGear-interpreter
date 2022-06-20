@@ -9,22 +9,25 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
+#include "Parser.hpp"
+
+
 using namespace std;
 
 
 class Client
 {
-    private:
-        static Client* instance;
+private:
+    Client();
+    ~Client();
+    static Client* instance;
+    int testinClientConection();
         
-        Client();
-        ~Client();
-    public:
-        /* Static access method. */
-        static Client* getInstance();
-        static int testinClientConection();
-        void Send(std::string msg);
-		static int connect1(int port);
+public:
+    static Client* getInstance();
+    void Send(std::string msg);
+    void SendVal(vector<vector<string>> &arr,double infix);
+	int connectClient(int port);
 		
 };
 

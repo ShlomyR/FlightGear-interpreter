@@ -20,7 +20,7 @@ var rudder = bind /controls/flight/rudder
 var aileron = bind /controls/flight/aileron
 var elevator = bind /controls/flight/elevator
 var alt = bind /instrumentation/altimeter/indicated-altitude-ft
-sleep 70
+sleep 45
 print "let's start"
 sleep 1
 magnetos = 3
@@ -34,11 +34,10 @@ primer = 3
 starter = 1
 autostart = 1
 print "engine is warming..."
-print rpm
 rpm = 800
 print rpm
 var h0 = heading
-sleep 10
+sleep 5
 print "let's fly"
 breaks = 0
 sleep 5
@@ -51,3 +50,4 @@ while alt < 1000 {
     sleep 1
 }
 print "done"
+exit FG

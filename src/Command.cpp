@@ -1,12 +1,13 @@
 #include "Command.hpp"
 #include "WhileLoop.hpp"
+#include "Client.hpp"
 
-OpenServerCommand:: OpenServerCommand() : Command() 
+OpenServerCommand::OpenServerCommand()
 {
-
+    
 }
 
-int OpenServerCommand:: DoCommand(vector<vector<string>>& arr, int index)
+int OpenServerCommand::DoCommand(vector<vector<string>> &arr)
 {
     printf("Server Command\n");
 
@@ -18,8 +19,8 @@ int OpenServerCommand:: DoCommand(vector<vector<string>>& arr, int index)
     
     try
     {
-        port = convertSTOI(arr[index][1]);
-        ping = convertSTOI(arr[index][2]);
+        port = stoi(arr[Parser::index][1]);
+        ping = stoi(arr[Parser::index][2]);
 
         if(port != (int)port)
         {
@@ -51,23 +52,24 @@ int OpenServerCommand:: DoCommand(vector<vector<string>>& arr, int index)
         cout << "one or more parameters missing\n";
     }
 
-    printf("Conecting to the Server...\n");
 
     Server::getInstance()->connectServer(port,ping);
     
     
     return 0;
 }
-OpenServerCommand:: ~OpenServerCommand()
-{ 
+
+OpenServerCommand::~OpenServerCommand()
+{
     
 }
 
-ConnectCommand::ConnectCommand() : Command()
+ConnectCommand::ConnectCommand()
 {
+    
 }
 
-int ConnectCommand::DoCommand(vector<vector<string>> &arr, int index)
+int ConnectCommand::DoCommand(vector<vector<string>> &arr)
 {
     
 
@@ -77,8 +79,8 @@ int ConnectCommand::DoCommand(vector<vector<string>> &arr, int index)
 
     try
     {
-        ip = arr[index][1];
-        port = convertSTOI(arr[index][2]);
+        ip = arr[Parser::index][1];
+        port = stoi(arr[Parser::index][2]);
 
         if (port != (int)port)
         {
@@ -113,155 +115,152 @@ int ConnectCommand::DoCommand(vector<vector<string>> &arr, int index)
 
     printf("Conecting the client to the FS...\n");
 
-    Client::getInstance()->connect1(port);
+    Client::getInstance()->connectClient(port);
 
     return 0;
 }
 
 ConnectCommand::~ConnectCommand()
 {
-
+    
 }
 
-VerCommand:: VerCommand() : Command() 
+VerCommand::VerCommand()
 {
-
+    
 }
 
-int VerCommand:: DoCommand(vector<vector<string>>& arr, int index)
+int VerCommand::DoCommand(vector<vector<string>> &arr)
 {
     
     vector<string> var_arr;
     
-    if (arr[index].size() == 5)
+    if (arr[Parser::index].size() == 5)
     {
-        for (int i = 1; i < arr[index].size(); i++)
+        for (int i = 1; i < arr[Parser::index].size(); i++)
         {
-            var_arr.push_back(arr[index][i]);
+            var_arr.push_back(arr[Parser::index][i]);
         }
-        Variiable::Vari(var_arr);
+        Variable::getInstance()->CreateVar(var_arr);
     }
     
-    if (arr[index].size() == 4)
+    if (arr[Parser::index].size() == 4)
     {
-        for (int i = 1; i < arr[index].size(); i++)
+        for (int i = 1; i < arr[Parser::index].size(); i++)
         {
-            var_arr.push_back(arr[index][i]);
+            var_arr.push_back(arr[Parser::index][i]);
         }
-        Variiable::Vari(var_arr);
+        Variable::getInstance()->CreateVar(var_arr);
     }
     
     return 0;
 }
 
-VerCommand:: ~VerCommand()
+VerCommand::~VerCommand()
 {
     
 }
 
-EqualMapCommand::EqualMapCommand() : Command()
-{
-}
-
-int EqualMapCommand::DoCommand(vector<vector<string>> &arr, int index)
+EqualMapCommand::EqualMapCommand()
 {
     
-    if (arr[index].size() == 3)
+}
+
+int EqualMapCommand::DoCommand(vector<vector<string>> &arr)
+{
+    
+    if (arr[Parser::index].size() == 3)
     {
-        int value = convertSTOI(arr[index][2]);
+        int value = stoi(arr[Parser::index][2]);
 
         string set = "set";
         string activate = "\r\n";
-        Client::getInstance()->Send(set + " " + Variiable::baseMapDB.at(arr[index][0]) + " " + arr[index][2] + activate);
+        Client::getInstance()->Send(set + " " + Variable::getInstance()->base_map_DB.at(arr[Parser::index][0]) + " " + arr[Parser::index][2] + activate);
     }
     else
     {
-        uptdateFromDB(arr, index);
+        uptdateFromDB(arr);
     }
 
     return 0;
 }
 
-void EqualMapCommand::uptdateFromDB(vector<vector<string>> &arr, int index)
+void EqualMapCommand::uptdateFromDB(vector<vector<string>> &arr)
 {
-    WhileLoop opp;
+    WhileLoop whileloop;
+    
+    int i = Parser::index;
 
-    double reg;
+    whileloop.copy_arr = arr;
 
-    opp.copyArr = arr;
-
-    for (int i = 0; i < arr[index].size(); i++)
+    for (int i = 0; i < arr[Parser::index].size(); i++)
     {
-        for (int j = 0; j < Variiable::getInstance()->vecSY.size(); j++)
+        for (int j = 0; j < Variable::getInstance()->vec_all_symbels.size(); j++)
         {
-            if (arr[index][i] == Variiable::getInstance()->vecSY[j] && arr[index][0] != Variiable::getInstance()->vecSY[j])
+            if (arr[Parser::index][i] == Variable::getInstance()->vec_all_symbels[j] && arr[Parser::index][0] != Variable::getInstance()->vec_all_symbels[j])
             {
-                if (arr[index][i] == "h0")
+                if (arr[Parser::index][i] == "h0")
                 {
-                    double d = SymbleVar::getInstance()->data_base.at(opp.copyArr[index][i]);
-                    int p = d;
-                    string s = to_string(p);
-                    opp.copyArr[index][i] = s;
+                    double d = SymbleVar::getInstance()->data_base.at(whileloop.copy_arr[Parser::index][i]);
+                    int dtoi = d;
+                    string s = to_string(dtoi);
+                    whileloop.copy_arr[Parser::index][i] = s;
                     
                 }
                 else
                 {
-                    double d = SymbleVar::getInstance()->data_base.at(Variiable::getInstance()->baseMapDB.at(opp.copyArr[index][i]));
-                    int p = d;
-                    string s = to_string(p);
-                    opp.copyArr[index][i] = s;
+                    double d = SymbleVar::getInstance()->data_base.at(Variable::getInstance()->base_map_DB.at(whileloop.copy_arr[Parser::index][i]));
+                    int dtoi = d;
+                    string s = to_string(dtoi);
+                    whileloop.copy_arr[Parser::index][i] = s;
                     
                 }
             }
         }
     }
+    
+    string str_push_to_vec;
 
-    for (int p = 0; p < opp.copyArr.size() - 2; p++)
+    for (i;i < whileloop.copy_arr.size() - 2;i++)
     {
-        for (int r = 0; r < opp.copyArr[p].size() - 2; r++)
+        for (int j = 0; j < whileloop.copy_arr[i].size() - 2; j++)
         {
-            opp.vv[p].append(opp.copyArr[p][r + 2]);
+            str_push_to_vec += whileloop.copy_arr[i][j + 2];
         }
+        whileloop.infix_vec.push_back(str_push_to_vec);
+        str_push_to_vec.clear();
+        break;
     }
-
     
+    double infix;
 
+    infix = SuntingYardToken::shunting_Yard(whileloop.infix_vec[0]);
+
+    Client::getInstance()->SendVal(arr,infix);
     
-
-    reg = SuntingYardToken::shunting_Yard(opp.vv[index]);
-
-        
-    string val = to_string(reg);
-
-    string set = "set";
-    string activate = "\r\n";
-
-    Client::getInstance()->Send(set + " " + Variiable::baseMapDB.at(arr[index][0]) + " " + val + activate);
-    
-
-    opp.vv.clear();
+    whileloop.infix_vec.clear();
 }
 
 EqualMapCommand::~EqualMapCommand()
 {
-
+    
 }
 
-WhileCommand::WhileCommand() : Command()
+WhileCommand::WhileCommand()
 {
     
 }
 
-double WhileCommand::getVal(vector<vector<string>>& arr, int index)
+double WhileCommand::getVal(vector<vector<string>> &arr,int index)
 {
-    string path = Variiable::getInstance()->baseMapDB.at(arr[index][1]);
+    string path = Variable::getInstance()->base_map_DB.at(arr[index][1]);
 
     double val = SymbleVar::getInstance()->data_base.at(path);
 
     return val;
 }
 
- int WhileCommand::skipRows(vector<vector<string>>& arr, int index)
+ int WhileCommand::skipRows(vector<vector<string>> &arr,int index)
  {
     
     int i = index+1;
@@ -270,24 +269,19 @@ double WhileCommand::getVal(vector<vector<string>>& arr, int index)
     {
         i++;    
     }
-    cout << "How meny rows to skip : " << i - index << "\n";
+    cout << "\nHow meny rows to skip : " << i - index << "\n";
     
-    return i - index;
-    
+    return i;  
  }
 
-int WhileCommand::DoCommand(vector<vector<string>>& arr, int index)
+int WhileCommand::DoCommand(vector<vector<string>> &arr)
 {
-    sleep(5);
-
-    int  sipRows1 = skipRows(arr,index);
     
-    WhileLoop::whileLoop(arr,index);
+    int skip_row = skipRows(arr,Parser::index);
     
+    WhileLoop::whileLoop(arr);
     
-
-
-    return sipRows1;
+    return skip_row;
 }
 
 WhileCommand::~WhileCommand()
@@ -295,46 +289,43 @@ WhileCommand::~WhileCommand()
     
 }
 
-SleepCommand::SleepCommand() : Command()
+SleepCommand::SleepCommand()
 {
-
+    
 }
 
-int SleepCommand::DoCommand(vector<vector<string>>& arr, int index)
+int SleepCommand::DoCommand(vector<vector<string>> &arr)
 {
     
-    sleepFunc(arr[index][1]);
+    sleepFunc(arr[Parser::index][1]);
 
     return 0;
-
-    
 }
 
 void SleepCommand::sleepFunc(string val)
 {
-    
-    cout << "Sleeping for " << val << " seconds" << "\n"; 
-    sleep(convertSTOI(val));
+    cout << "\nSleeping for " << val << " seconds" << "\n"; 
+    sleep(stoi(val));
 }
 
 SleepCommand::~SleepCommand()
 {
-
+    
 }
 
-PrintCommand::PrintCommand() : Command()
+PrintCommand::PrintCommand()
 {
     
 }
 
-int PrintCommand::DoCommand(vector<vector<string>> &arr, int index)
+int PrintCommand::DoCommand(vector<vector<string>> &arr)
 {
-    if (arr[index].size() > 2)
+    if (arr[Parser::index].size() > 2)
     {
         string val = " "; 
-        for (int i = 1; i < arr[index].size(); i++)
+        for (int i = 1; i < arr[Parser::index].size(); i++)
         {
-            val+=  arr[index][i]+" ";
+            val+=  arr[Parser::index][i]+" ";
 
         }
         cout << val << "\n";
@@ -343,7 +334,7 @@ int PrintCommand::DoCommand(vector<vector<string>> &arr, int index)
     }
     else
     {
-        printFunc(arr[index][1]);
+        printFunc(arr[Parser::index][1]);
     }
     
 
@@ -352,15 +343,15 @@ int PrintCommand::DoCommand(vector<vector<string>> &arr, int index)
 
 void PrintCommand::printFunc(string val)
 {
-    string val1 = val;
+    string val_before = val;
 
-    for (int i = 0; i < Variiable::vecSY.size(); i++)
+    for (int i = 0; i < Variable::getInstance()->vec_all_symbels.size(); i++)
     {
-        if (val == Variiable::vecSY[i])
+        if (val == Variable::getInstance()->vec_all_symbels[i])
         {
-            double d = SymbleVar::getInstance()->data_base.at(Variiable::getInstance()->baseMapDB.at(val));
+            double d = SymbleVar::getInstance()->data_base.at(Variable::getInstance()->base_map_DB.at(val));
             string s = to_string(d);
-            cout << val1 << ": " << d << "\n";
+            cout << val_before << ": " << d << "\n";
         }
     }
     if (val[0] == '"')
@@ -370,6 +361,28 @@ void PrintCommand::printFunc(string val)
 }
 
 PrintCommand::~PrintCommand()
+{
+    
+}
+
+ExitCommand::ExitCommand()
+{
+    
+}
+
+int ExitCommand::DoCommand(vector<vector<string>> &arr)
+{
+    system("kill -9 $(lsof -ti :5400)");
+
+    return 0;
+}
+
+ExitCommand::~ExitCommand()
+{
+    
+}
+
+Command::~Command()
 {
     
 }
