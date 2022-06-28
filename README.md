@@ -4,7 +4,7 @@ this is a learning project of c++ from scratch and OOP and command pattern.
 
 this is for ubuntu system
 
-first install this in the command line:
+**first install this in the command line:**
 
 sudo add-apt-repository ppa:saiarcot895/flightgear
 sudo apt update
@@ -16,13 +16,13 @@ After the installation go to the ubuntu software (store) and download "flightgea
 
 After the installation of the "flightgear"
 
-put those lines in the setting:
+**put those lines in the setting:**
 
 --telnet=socket,in,10,127.0.0.1,5402,tcp‬‬
 ‫‪--generic=socket,out,10,127.0.0.1,5400,tcp,generic_small
 ![test23](https://user-images.githubusercontent.com/91196585/176132900-eea79aa0-2f3f-4d6c-be9c-155dffaa2cdc.jpeg)
 
-take the xml file - generic_small.xml and put it in this directory:
+**take the xml file - generic_small.xml and put it in this directory:**
 
 /usr/share/games/flightgear/Protocol
 
