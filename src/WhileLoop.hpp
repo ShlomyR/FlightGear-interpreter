@@ -12,13 +12,9 @@
 
 class WhileLoop
 {
-private:
-    static void deleteSpace(vector<vector<string>> &arr);
 public:
-    WhileLoop();
     static int whileLoop(vector<vector<string>> &arr);
-        
-    vector<string> infix_vec;
-    vector<vector<string>> copy_arr;
+    static string infix_str;
+    static vector<vector<string>> copy_arr;
 
 };

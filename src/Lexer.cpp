@@ -1,15 +1,12 @@
 #include "Lexer.hpp"
 
-Lexer::Lexer()
-{
-    
-}
 
-vector<vector<string>> Lexer::do_lexer(string file_name)
+vector<vector<string>> Lexer::doLexer(string file_name)
 {
     vector<vector<string>> main_vector_arr;
-    fstream file;
+    ifstream file;
     string line;
+    
     file.open(file_name, ios::in | ios::binary);
 
     if (!file.is_open())
@@ -20,20 +17,20 @@ vector<vector<string>> Lexer::do_lexer(string file_name)
     while (getline(file, line))
     {
 
-        vector<string> vec_row;
-        splitbyWord(line, vec_row, ' ');
-        main_vector_arr.push_back(vec_row);
+        vector<string> vec_words;
+        splitbyWord(line, vec_words, ' ');
+        main_vector_arr.push_back(vec_words);
     }
     file.close();
 
-    deleteSpace(main_vector_arr);
+    deleteSpaceInFuncScope(main_vector_arr);
 
     printVec(main_vector_arr);
 
     return main_vector_arr;
 }
 
-void Lexer::deleteSpace(vector<vector<string>> &arr)
+void Lexer::deleteSpaceInFuncScope(vector<vector<string>> &arr)
 {
     Parser parser;
 
@@ -44,24 +41,16 @@ void Lexer::deleteSpace(vector<vector<string>> &arr)
             if (arr[i][j] == "{")
             {
                 i++;
+
                 while (arr[i][0] != "}")
                 {
-                    if (arr[i].size() == 6)
+                    
+                    while (arr[i][0] == "")
                     {
-                        for (int j = 0; j < 4; j++)
-                        {
-                            arr[i].erase(arr[i].begin());
-                        }
-                        parser.vector_commands.push_back(arr[i]);
+                        arr[i].erase(arr[i].begin());
                     }
-                    if (arr[i].size() != 2)
-                    {
-                        for (int j = 0; j < 4; j++)
-                        {
-                            arr[i].erase(arr[i].begin());
-                        }
-                        parser.vector_commands.push_back(arr[i]);
-                    }
+                    parser.vector_commands.push_back(arr[i]);
+
                     i++;
                 }
             }
@@ -89,7 +78,6 @@ void Lexer::printVec(vector<vector<string>> &vec_arr)
         {
             cout << vec_arr[i][j] << " ";
         }
-        cout << "]"
-             << "\n";
+        cout << "]" << "\n";
     }
 }

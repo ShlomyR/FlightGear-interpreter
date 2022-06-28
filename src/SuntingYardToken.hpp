@@ -29,5 +29,5 @@ public:
     const int precedence;
     const bool rightAssociative;
     
-    static double shunting_Yard(std::string expre);
+    static double shuntingYardF(std::string expre);
 };

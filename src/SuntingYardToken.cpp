@@ -201,7 +201,7 @@ std::deque<SuntingYardToken> shuntingYard(const std::deque<SuntingYardToken>& to
     return queue;
 }
 
-double SuntingYardToken::shunting_Yard(std::string expre)
+double SuntingYardToken::shuntingYardF(std::string expre)
 {
     std::string zero_init = "0";
 
@@ -215,11 +215,11 @@ double SuntingYardToken::shunting_Yard(std::string expre)
     {
         printf("expr = %s\n", expr.c_str());
         
-        if (expr[1] == '-' && expr[2] == '-' )
-        {
-            expr.erase(expr.begin()+2) ;
-            expr[1] = '+';
-        }
+        // if (expr[1] == '-' && expr[2] == '-' )
+        // {
+        //     expr.erase(expr.begin()+2) ;
+        //     expr[1] = '+';
+        // }
         
         //printf(reportFmt, "Token", "Queue", "Stack", "");
 

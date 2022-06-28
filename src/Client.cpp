@@ -11,14 +11,10 @@ Client* Client::getInstance()
     return instance;
 }
 
-Client::Client()
-{
-    
-}
 
 int sock = 0, valread; 
 
-int Client::connectClient(int port)
+int Client::connectClient(int port,const char* ip)
 {
 	struct sockaddr_in serv_addr; 
 	
@@ -32,7 +28,7 @@ int Client::connectClient(int port)
     serv_addr.sin_family = AF_INET; 
     serv_addr.sin_port = htons(port); 
 
-    if(inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr)<=0)  
+    if(inet_pton(AF_INET, ip, &serv_addr.sin_addr)<=0)  
     { 
         printf("\nInvalid address/ Address not supported \n"); 
         return 0; 
@@ -72,7 +68,11 @@ void Client::SendVal(vector<vector<string>> &arr,double infix)
     
 }
 
-Client::~Client()
+void Client::SendVal(vector<vector<string>> &arr,string val)
 {
+    string set = "set";
+    string activate = "\r\n";
 
+    Client::getInstance()->Send(set + " " + Variable::getInstance()->base_map_DB.at(arr[Parser::index][0]) + " " + val + activate);
+    
 }

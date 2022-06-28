@@ -15,9 +15,8 @@ class Lexer
 private:
     void splitbyWord(string const &str,vector<string> &vec_str,const char Delim);
     void printVec(vector<vector<string>> &vec_arr);
-    void deleteSpace(vector<vector<string>> &arr);
+    void deleteSpaceInFuncScope(vector<vector<string>> &arr);
 
 public:
-    Lexer();
-    vector<vector<string>> do_lexer (string file_name);
+    vector<vector<string>> doLexer(string file_name);
 };

@@ -50,4 +50,5 @@ while alt < 1000 {
     sleep 1
 }
 print "done"
+sleep 5
 exit FG

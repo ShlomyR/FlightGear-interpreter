@@ -18,16 +18,15 @@ using namespace std;
 class Client
 {
 private:
-    Client();
-    ~Client();
     static Client* instance;
     int testinClientConection();
         
 public:
     static Client* getInstance();
-    void Send(std::string msg);
+    void Send(string msg);
     void SendVal(vector<vector<string>> &arr,double infix);
-	int connectClient(int port);
+    void SendVal(vector<vector<string>> &arr,string val);
+	int connectClient(int port,const char* ip);
 		
 };
 

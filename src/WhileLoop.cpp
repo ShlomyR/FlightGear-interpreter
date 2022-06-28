@@ -1,13 +1,11 @@
 #include "WhileLoop.hpp"
 
-WhileLoop::WhileLoop()
-{
-
-}
 
 
 Parser parser;
 
+string WhileLoop::infix_str;
+vector<vector<string>> WhileLoop::copy_arr;
 
 int WhileLoop::whileLoop(vector<vector<string>> &arr)
 { 
@@ -23,7 +21,7 @@ int WhileLoop::whileLoop(vector<vector<string>> &arr)
 
     parser.index = 0;
     
-    printf("Parser finished\n");
+    printf("\nWhileLoop Parser finished\n");
 
     return 0;
 }

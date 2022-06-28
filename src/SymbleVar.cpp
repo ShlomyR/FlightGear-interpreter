@@ -11,13 +11,8 @@ SymbleVar* SymbleVar::getInstance()
     return instance;
 }
 
-SymbleVar::SymbleVar()
-{
-    
-}
-
 template<typename Ks, typename Vs>
-void SymbleVar::print_mapDB(std::unordered_map<Ks, Vs> const &m)
+void SymbleVar::printMapDB(std::unordered_map<Ks, Vs> const &m)
 {
     if (m.empty())
     {

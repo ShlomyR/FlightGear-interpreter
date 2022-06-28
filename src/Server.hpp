@@ -4,7 +4,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <netinet/in.h>
-#include <cstring>
+#include <string.h>
 #include <vector>
 #include <chrono>
 #include <thread>
@@ -20,26 +20,22 @@ using namespace std::chrono;
 class Server
 {
 private:
-
-    Server();
-    ~Server();
 	static Server* instance;
-    string read_data(std::string msg);
-    vector<double> getValVector(string s);
+    string readData(string msg);
+    vector<double> getValVector(string str);
     static void runServerDB();
-    static void run_FG();
+    static void runFG();
+    void makeBindArray();
 
     std::thread t1;
     std::thread t2;
     
 public:
-
-    std::string bindArr[36];
+    string bind_arr[36];
 	
-	int connectServer(int port, int ping);
+	int connectServer(int port);
     static Server* getInstance();
     
-    void makeBindArray();
 
     		
 };
@@ -74,7 +70,7 @@ enum vars {
     master_avionics,
     starter,
     auto_start,
-    speedbrake,
+    speed_brake,
     brake_parking,
     engine_primer,
     engine_mixture,
