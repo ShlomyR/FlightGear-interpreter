@@ -14,17 +14,11 @@ SymbleVar* SymbleVar::getInstance()
 template<typename Ks, typename Vs>
 void SymbleVar::printMapDB(std::unordered_map<Ks, Vs> const &m)
 {
-    if (m.empty())
+    for (auto const &pair: m) 
     {
-        cout << "The map is empty\n";
+        std::cout << "{" << pair.first << " : " << pair.second << "}\n";
     }
-    else
-    {
-        for (auto const &pair: m) 
-        {
-            std::cout << "{" << pair.first << " : " << pair.second << "}\n";
-        }
-    }
+    
 }
 
 unordered_map<string,double> SymbleVar::creatDataBaseMap(string key,double val)

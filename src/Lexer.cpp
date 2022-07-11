@@ -7,7 +7,7 @@ vector<vector<string>> Lexer::doLexer(string file_name)
     ifstream file;
     string line;
     
-    file.open(file_name, ios::in | ios::binary);
+    file.open(file_name,ios::in | ios::binary);
 
     if (!file.is_open())
     {
@@ -18,22 +18,21 @@ vector<vector<string>> Lexer::doLexer(string file_name)
     {
 
         vector<string> vec_words;
-        splitbyWord(line, vec_words, ' ');
+        splitbyWord(line,vec_words,' ');
         main_vector_arr.push_back(vec_words);
     }
     file.close();
 
-    deleteSpaceInFuncScope(main_vector_arr);
+    deleteScopeSpace(main_vector_arr);
 
     printVec(main_vector_arr);
 
     return main_vector_arr;
 }
 
-void Lexer::deleteSpaceInFuncScope(vector<vector<string>> &arr)
+void Lexer::deleteScopeSpace(vector<vector<string>> &arr)
 {
-    Parser parser;
-
+    
     for (int i = 0; i < arr.size(); i++)
     {
         for (int j = 0; j < arr[i].size(); j++)
@@ -41,7 +40,6 @@ void Lexer::deleteSpaceInFuncScope(vector<vector<string>> &arr)
             if (arr[i][j] == "{")
             {
                 i++;
-
                 while (arr[i][0] != "}")
                 {
                     
@@ -49,8 +47,6 @@ void Lexer::deleteSpaceInFuncScope(vector<vector<string>> &arr)
                     {
                         arr[i].erase(arr[i].begin());
                     }
-                    parser.vector_commands.push_back(arr[i]);
-
                     i++;
                 }
             }

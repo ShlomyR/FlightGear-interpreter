@@ -12,6 +12,8 @@
 
 class WhileLoop
 {
+private:
+    static void pushToVec(vector<vector<string>> &arr,int i);
 public:
     static int whileLoop(vector<vector<string>> &arr);
     static string infix_str;

@@ -13,6 +13,8 @@ int WhileLoop::whileLoop(vector<vector<string>> &arr)
 
     int i = Parser::index;
 
+    pushToVec(arr,i);
+    
     while ((val_from_DB = WhileCommand::getVal(arr,i)) < stoi(arr[i][3]))
     {
         parser.parse(parser.vector_commands);
@@ -24,4 +26,14 @@ int WhileLoop::whileLoop(vector<vector<string>> &arr)
     printf("\nWhileLoop Parser finished\n");
 
     return 0;
+}
+
+void WhileLoop::pushToVec(vector<vector<string>> &arr,int i)
+{
+    i++;
+    while (arr[i][0] != "}")
+    {
+        parser.vector_commands.push_back(arr[i]);
+        i++;
+    }
 }

@@ -49,7 +49,6 @@ int VerCommand::DoCommand(vector<vector<string>> &arr)
 
 int EqualMapCommand::DoCommand(vector<vector<string>> &arr)
 {
-    
     if (arr[Parser::index].size() == 3)
     {
         Client::getInstance()->SendVal(arr,arr[Parser::index][2]);
@@ -154,7 +153,7 @@ int WhileCommand::skipRows(vector<vector<string>> &arr,int index)
     {
         i++;    
     }
-    cout << "\nHow meny rows to skip : " << i - index << "\n";
+    cout << "\nHow meny rows to skip : " << i - index -1 << "\n";
     
     return i;  
 }
@@ -219,6 +218,7 @@ void PrintCommand::printFunc(string val)
     {    
         cout << "\n" << val << "\n";   
     }
+
 }
 
 int ExitCommand::DoCommand(vector<vector<string>> &arr)

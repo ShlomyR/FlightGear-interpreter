@@ -1,5 +1,7 @@
 #include "Client.hpp"
 
+#define SET (string)"set"
+#define ACTIVATE (string)"\r\n"
 
 Client* Client::instance = 0;
 Client* Client::getInstance()
@@ -11,14 +13,15 @@ Client* Client::getInstance()
     return instance;
 }
 
+int sock = 0, valread;
+string Set = "set";
+string Activate = "\r\n";
 
-int sock = 0, valread; 
 
 int Client::connectClient(int port,const char* ip)
 {
 	struct sockaddr_in serv_addr; 
 	
-	char buffer[1024] = {0}; 
     if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) 
     { 
         printf("\n Socket creation error \n"); 
@@ -42,37 +45,26 @@ int Client::connectClient(int port,const char* ip)
     return 0;
 }
 
-int Client::testinClientConection()
-{
-    
-	Client::getInstance()->Send("set controls/flight/rudder -1\r\n");
-	
-    return 0;
+void Client::testinClientConection()
+{ 
+	Client::getInstance()->Send(Set+" controls/flight/rudder 1"+Activate);
 }
 
 void Client::Send(std::string msg)
 {
 	send(sock , msg.c_str() , msg.length() , 0 );
-    cout << msg << "\n";
-    
+
+    cout << msg << "\n"; 
 }
 
 void Client::SendVal(vector<vector<string>> &arr,double infix)
 {
     string val = to_string(infix);
 
-    string set = "set";
-    string activate = "\r\n";
-
-    Client::getInstance()->Send(set + " " + Variable::getInstance()->base_map_DB.at(arr[Parser::index][0]) + " " + val + activate);
-    
+   Client::getInstance()->Send(Set + " " + Variable::getInstance()->base_map_DB.at(arr[Parser::index][0]) + " " + val + Activate);  
 }
 
 void Client::SendVal(vector<vector<string>> &arr,string val)
 {
-    string set = "set";
-    string activate = "\r\n";
-
-    Client::getInstance()->Send(set + " " + Variable::getInstance()->base_map_DB.at(arr[Parser::index][0]) + " " + val + activate);
-    
+   Client::getInstance()->Send(Set + " " + Variable::getInstance()->base_map_DB.at(arr[Parser::index][0]) + " " + val + Activate);
 }
